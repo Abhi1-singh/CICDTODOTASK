@@ -1,0 +1,22 @@
+import mongoose from "mongoose";
+
+const todoSchema = new mongoose.Schema(
+  {
+    title: { type: String, required: true },
+
+    status: {
+      type: String,
+      enum: ["pending", "in_progress", "completed"],
+      default: "pending"
+    },
+
+    priority: {
+      type: String,
+      enum: ["low", "medium", "high"],
+      default: "medium"
+    }
+  },
+  { timestamps: true }
+);
+
+export default mongoose.model("Todo", todoSchema);
