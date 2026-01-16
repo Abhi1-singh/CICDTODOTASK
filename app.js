@@ -61,35 +61,21 @@
 
 // export default app;
 
+
 import express from "express";
 import cors from "cors";
 import todoRoutes from "./routes/todo.routes.js";
 
 const app = express();
 
-/* 🔥 FINAL CORS – VERCEL SAFE */
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      // allow requests with no origin (Postman, curl)
-      if (!origin) return callback(null, true);
-
-      // allow all vercel domains
-      if (
-        origin.includes("vercel.app")
-      ) {
-        return callback(null, true);
-      }
-
-      return callback(new Error("Not allowed by CORS"));
-    },
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
-
-/* 🔥 Preflight MUST */
-app.options("*", cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://cicdtodotaskvite.vercel.app"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type"]
+}));
 
 app.use(express.json());
 
